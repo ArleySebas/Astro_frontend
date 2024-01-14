@@ -1,0 +1,254 @@
+<section class="section_form" onsubmit="return validateForm(event)">
+    <form id="formulario" transition:name="form">
+        <a href="/">
+            <img
+                class="arrow_back_form"
+                src="arrow_back_white.svg"
+                alt="Flecha atrás para volver a página anterior"
+            />
+        </a>
+        <label for="name">Nombre:</label>
+        <input type="text" name="name" id="name" required/>
+
+        <label for="email">Correo electrónico:</label>
+        <input type="text" id="email" name="email" required />
+
+        <label for="phone">Teléfono de contacto:</label>
+        <input type="number" name="phone" id="phone" required />
+
+        <label for="message">Mensaje:</label>
+        <textarea name="message" id="message" required></textarea>
+        <p class="caracteres"></p>
+
+        <input type="submit" value="Enviar" />
+    </form>
+    <div class="mensaje_enviado_div">
+        <p class="mensaje_enviado">Mensaje enviado correctamente</p>
+    </div>
+</section>
+
+<style>
+    .section_form {
+        height: 120%;
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+    }
+    .arrow_back_form {
+        position: absolute;
+        top: 2%;
+        left: 2%;
+        width: clamp(5rem, 5vw + 0.5rem, 20rem);
+
+    }
+    #formulario {
+        height: max-content;
+        width: 80%;
+
+        padding: 2%;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        gap: clamp(1rem, 2vw + 0.5rem, 3.5rem);
+
+        text-align: center;
+        font-size: clamp(1rem, 2vw + 0.5rem, 3rem);
+        border: 1rem solid black;
+        border-radius: 2rem;
+
+        z-index: 999;
+
+        transition: transform 0.3s ease-in-out;
+    }
+    #formulario:hover {
+        background-color: #d6f6f7;
+    }
+    #formulario input {
+        width: 50%;
+        background-color: transparent;
+
+        border-radius: 2rem;
+        border: 0.5rem inset #089cc4;
+        transition: transform 0.3s ease-in-out;
+    }
+    #formulario input:hover,
+    textarea:hover {
+        transform: scale(1.1);
+        background-color: rgba(128, 128, 128, 0.144);
+    }
+    #formulario textarea {
+        width: 40%;
+        height: 40%;
+
+        font-size: clamp(1rem, 2vw + 0.5rem, 2rem);
+
+        border-radius: 2rem;
+        border: 0.5rem inset #089cc4;
+        background-color: transparent;
+
+        transition: transform 0.3s ease-in-out;
+    }
+    #formulario input[type="submit"] {
+        cursor: pointer;
+        width: 20%;
+        transition: transform 0.3s ease-in-out;
+    }
+    #formulario input[type="submit"]:hover {
+        transform: scale(0.8);
+    }
+
+    .mensaje_enviado_div {
+        width: 100%;
+        height: 100%;
+
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .mensaje_enviado {
+        width: 100%;
+        height: 100%;
+
+        display: none;
+        justify-content: center;
+        align-items: center;
+
+        z-index: 998;
+        font-size: clamp(5rem, 5vw + 0.5rem, 10rem);
+        color: white;
+        background-color: rgba(0, 0, 0, 0.623);
+    }
+</style>
+
+
+
+
+<script is:inline>
+
+    addEventListener("keydown", () => {
+        caracteres();
+    });
+
+    async function validateForm(event) {
+        event.preventDefault();
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const phone = document.getElementById("phone").value;
+        const message = document.getElementById("message").value;
+        const mensajeEnviado = document.querySelector(".mensaje_enviado");
+
+        formData = {
+            name,
+            email,
+            phone,
+            message,
+        };
+
+        const formDataState = { ...formData };
+
+        if (name.length < 4 || name.length > 50) {
+            alert(
+                `El nombre debe tener entree 4 y 50 caracteres, actualmente tiene: ${formData.name.length}`,
+            );
+            return false;
+        }
+
+        if (email.length < 10 || email.length > 100) {
+            alert(
+                `El email debe tener entre 10 y 100 caracteres, actualmente tiene: ${formData.email.length}`,
+            );
+            return false;
+        }
+        const emailRegex = /^\S+@\S+\.\S+$/;
+        if (!emailRegex.test(email)) {
+            alert("Por favor, ingresa un correo electrónico válido");
+            return false;
+        }
+        if (phone.length < 10 || phone.length > 14) {
+            alert(
+                `El número debe tener entre 10 y 14 dígitos, actualmente tiene: ${formData.phone.length}`,
+            );
+            return false;
+        }
+        if (message.length < 10 || message.length > 200) {
+            alert(
+                `El mensaje debe contener entre 10 y 200 caracteres, actualmente tiene: ${formData.message.length}`,
+            );
+            return false;
+        }
+
+        mensajeEnviado.style.display = "flex";
+        mensajeEnviado.style.zIndex = 1000;
+
+        try {
+            await sendBackend(formData);
+        } catch (error) {
+            console.error("Error en enviar datos", error);
+            restoreFormData(formData);
+        }
+
+        setTimeout(() => {
+            document.getElementById("formulario").submit();
+            console.log("formulario enviado");
+            window.location.href = '/';
+        }, 4000);
+
+        return false;
+    }
+
+    async function sendBackend(dataToSend) {
+    try {
+      const response = await fetch(`${import.meta.env.ACTUAL_HOST}formulario_contacto`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+      });
+  
+      if (!response.ok) {
+        throw new Error('Error en la solicitud Fetch');
+      }
+  
+      const responseData = await response.json();
+      console.log('solicitud enviada');
+      return responseData;
+    } catch (error) {
+      console.error('Error en la solicitud Fetch:', error);
+      throw error;
+    }
+  }
+
+    function restoreFormData(formDataState) {
+        document.getElementById("name").value = formDataState.name;
+        document.getElementById("email").value = formDataState.email;
+        document.getElementById("phone").value = formDataState.phone;
+        document.getElementById("message").value = formDataState.message;
+    }
+
+    function caracteres() {
+        const caracteres = document.querySelector(".caracteres");
+        const message = document.getElementById("message");
+        const numeroCaracteres = message.value.length;
+        let nombre;
+
+        const nombreCaracteres =
+            numeroCaracteres > 1
+                ? (nombre = "Caracteres")
+                : (nombre = "Caracter");
+
+        const texto = `Hay ${numeroCaracteres} ${nombre}`;
+
+        caracteres.innerText = texto;
+    }
+</script>

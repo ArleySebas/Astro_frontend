@@ -1,0 +1,65 @@
+---
+import Layout from "../layouts/Layout.astro";
+// import Leftblock from "../components/Leftblock.svelte";
+import Top from "../components/Top.svelte";
+import Middle from "../components/Middle.svelte";
+import Bottom1 from "../components/Bottom1.svelte";
+// import Bottom2 from "../components/Bottom2.svelte";
+import Body_bg from "../components/body-bg.astro";
+import Leftblock from "../components/Leftblock_copy.astro";
+import Bottom2 from "../components/Bottom2_copy.astro";
+---
+
+<Layout title="Portfolio" bg='url("mountains-background_4.png")' />
+<div class="container">
+    <Body_bg />
+        <!-- <Leftblock parametro="de esta forma puedo enviar parámetros a svelte desde astro, solo tengo que poner la etiqueta en el script lang="ts" client:visible />  -->
+        <!-- <Leftblock client:visible /> -->
+    <Leftblock />
+    <Top client:visible />
+    <Middle client:visible />
+    <Bottom1 client:visible />
+    <!-- <Bottom2 client:visible /> -->
+    <Bottom2 />
+</div>
+
+<style>
+    .container {
+        width: 100%;
+        height: 100%;
+
+        display: grid;
+        place-items: center;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        grid-template-areas:
+            "leftblock top     middle  middle"
+            "leftblock bottom1 bottom1 bottom2";
+
+        gap: 2rem;
+        transform: scale(0.9);
+
+        background: repeating-linear-gradient(90deg, #42c8d1d7, #1c7e85);
+        background: url("mountains-background_4.png");
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+
+        border-radius: 1rem;
+
+        overflow: hidden;
+    }
+
+    @media (max-width: 800px) {
+        .container {
+            grid-template-columns: 1fr;
+            grid-template-rows: 2fr 1fr 1fr 1fr 1fr;
+            grid-template-areas:
+                "leftblock"
+                "top"
+                "middle"
+                "bottom1"
+                "bottom2";
+            transform: scale(0.9);
+        }
+    }
+</style>

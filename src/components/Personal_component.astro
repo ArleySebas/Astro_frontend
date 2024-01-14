@@ -1,0 +1,135 @@
+---
+import Personal_background from "./Personal_bg.astro";
+interface Props {
+    background_component: string;
+    url: string;
+}
+
+const { background_component, url } = Astro.props;
+---
+<main class="perfil">
+    <div class="perfil_content" transition:name="imagen1">
+        <div class="perfil_img_div">
+            <a href="/">
+            <img
+                class="perfil_img"
+                src="caricaruta_objeto_inteligente.png"
+                alt="Foto de perfil"
+                
+            />
+        </a>
+            <h1 class="perfil_h1">Sebastian Arley <br /> Montoya Pedrozo</h1>
+        </div>
+
+        <div class="perfil_p_div">
+            <p class="perfil_p">
+                Ingeniero biomédico con enfoque en automatización y control,
+                especializado en modelos de Machine Learning como Random Forest,
+                SVM y KNN. Experto en Python (Pandas, Numpy, scikit-learn,
+                matplotlib), JavaScript intermedio, análisis de datos con Power
+                BI, gestión de bases de datos relacionales con Postgresql y
+                buena excelente de programación. <br> <br> Proactivo, eficiente y
+                apasionado por el aprendizaje continuo, busco un entorno que
+                estimule mi creatividad y que me permita contribuir
+                significativamente al éxito del equipo mientras crezco
+                personalmente y poder tener nuevas experiencias a mi vida
+                profesional.
+            </p>
+        </div> 
+    </div>
+    <a class="arrow_back_personal" href="/"><img src="arrow_back.png" alt="Flecha regresar página anterior"></a>
+    <Personal_background />
+
+    <style define:vars={{ background_component }}>
+        .perfil {
+            height: 100dvh;
+
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr;
+            place-items: center;
+
+            overflow: hidden;
+            position: relative;
+        }
+
+        .perfil_content {
+            grid-column: 1 / -1;
+            grid-row: 1 / -1;
+
+            height: max-content;
+            width: 55%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transform: scale(0.9);
+
+            border: 0.5rem solid skyblue;
+            border-radius: 2rem;
+            z-index: 1000;
+        }
+        .perfil_img_div {
+            width: 100%;
+            height: max-content;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 3%;
+
+            background-color: linear-gradient(180deg, skyblue), white;
+            -webkit-backdrop-filter: blur(3rem);
+            backdrop-filter: blur(3rem);
+            border: 0.1rem;
+            -webkit-box-shadow: 0rem 0rem 1rem 0.1rem rgba(0, 0, 0, 0.52);
+            -moz-box-shadow: 0rem 0rem 1rem 0.1rem rgba(0, 0, 0, 0.52);
+            box-shadow: 0rem 0rem 1rem 0.1rem rgba(0, 0, 0, 0.52);
+
+            border-radius: 2rem 2rem 0 0;
+        }
+        .perfil_img {
+            width: clamp(1rem, 25vw + 0.5rem, 50rem);
+            height: clamp(1rem, 25vw + 0.5rem, 50rem);
+            object-fit: cover;
+        }
+        .perfil_h1 {
+            font-weight: 900;
+            font-size: clamp(1rem, 2vw + 0.5rem, 4rem);
+            padding-top: 3%;
+            padding-bottom: 3%;
+        }
+        .perfil_p_div {
+            width: 100%;
+            height: max-content;
+
+            display: flex;
+            justify-content: center;
+            align-items: start;
+
+            /* background-color: linear-gradient(180deg, skyblue), white;
+            -webkit-backdrop-filter: blur(3rem);
+            backdrop-filter: blur(3rem);
+            border: 0.1rem;
+            -webkit-box-shadow: 0rem 0rem 1rem 0.1rem rgba(0, 0, 0, 0.52);
+            -moz-box-shadow: 0rem 0rem 1rem 0.1rem rgba(0, 0, 0, 0.52);
+            box-shadow: 0rem 0rem 1rem 0.1rem rgba(0, 0, 0, 0.52);
+            border-radius: 0 0 2rem 2rem; */
+            border-radius: 2rem;
+            background-color: rgba(128, 128, 128, 0.575);
+        }
+        .perfil_p {
+            color: whitesmoke;
+            font-weight: 500;
+            font-size: clamp(0.5rem, 1vw + 0.5rem, 3rem);
+        }
+        .arrow_back_personal {
+            position: absolute;
+            left: 5%;
+            top: 5%;
+            z-index: 1000;
+            width: clamp(3rem, 8vw + .5rem, 15rem);
+        }
+    </style>
+</main>

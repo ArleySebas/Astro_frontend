@@ -1,0 +1,183 @@
+<div class="body_background">
+    <div class="tree_mountains_1"></div>
+    <div class="tree_mountains_2"></div>
+    <div class="tree_mountains_3"></div>
+    <div class="tree_mountains_4"></div>
+    <div class="tree_mountains_5"></div>
+    <div class="birds1"></div>
+    <div class="birds2"></div>
+    <div class="birds3"></div>
+    <div class="clouds"></div>
+    <div class="tree_mountains_background"></div>
+</div>
+
+<style>
+
+    .body_background {
+        /* grid-area: leftblock; */
+        grid-column: 1 / -1;
+        grid-row: 1 / -1;
+
+        height: 100%;
+        width: 100%;
+
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas: "body-bg";
+        place-items: center;
+        place-content: center;
+        
+        z-index: 996;
+        --scale_bg: scaleX(1.2);        
+        overflow: hidden;
+    }
+
+    .tree_mountains_background {
+        background-image: url(tree_mountains_background.png);
+        z-index: 985;
+
+        animation: animate-bg 1s infinite alternate linear;
+    }
+    .clouds {
+        background-image: url(clouds.png);
+        z-index: 986;
+
+        animation: animate-clouds 2s infinite alternate linear;
+    }
+    .birds1 {
+        background-image: url(birds1.png);
+        z-index: 987;
+
+        animation: birds-1 2s infinite normal linear;
+    }
+    .birds2 {
+        background-image: url(birds2.png);
+        z-index: 988;
+
+        animation: birds-2 4s infinite normal linear;
+    }
+    .birds3 {
+        background-image: url(birds3.png);
+        z-index: 989;
+
+        animation: birds-3 6s infinite normal linear;
+    }
+    .tree_mountains_5 {
+        background-image: url(tree_mountains_5.png);
+        z-index: 990;
+
+        animation: animate-tree-mountains-1-3-5 6s infinite alternate linear;
+    }
+    .tree_mountains_4 {
+        background-image: url(tree_mountains_4.png);
+        z-index: 991;
+
+        animation: animate-tree-mountains-2-4 5s infinite alternate linear;
+    }
+    .tree_mountains_3 {
+        background-image: url(tree_mountains_3.png);
+        z-index: 992;
+
+        animation: animate-tree-mountains-1-3-5 4s infinite alternate linear;
+    }
+
+    .tree_mountains_2 {
+        background-image: url(tree_mountains_2.png);
+        z-index: 993;
+
+        animation: animate-tree-mountains-2-4 3s infinite alternate linear;
+    }
+    .tree_mountains_1 {
+        background-image: url(tree_mountains_1.png);
+        z-index: 994;
+
+        animation: animate-tree-mountains-1-3-5 2s infinite alternate linear;
+    }
+
+    .tree_mountains_background,
+    .tree_mountains_5,
+    .tree_mountains_4,
+    .tree_mountains_3,
+    .tree_mountains_2,
+    .tree_mountains_1,
+    .clouds,
+    .birds1,
+    .birds2,
+    .birds3 {
+        background-size: 100% 100%;
+        width: 100%;
+        height: 100%;
+
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    /* Keyframes */
+
+    @keyframes animate-bg {
+        0% {
+            transform: translateX(0%) var(--scale_bg);
+        }
+        100% {
+            transform: translateX(10%) var(--scale_bg);
+        }
+    }
+    @keyframes animate-clouds {
+        0% {
+            transform: translateX(0%) var(--scale_bg);
+        }
+        100% {
+            transform: translateX(10%) var(--scale_bg);
+        }
+    }
+    @keyframes animate-tree-mountains-1-3-5 {
+        0% {
+            transform: translateX(0%) var(--scale_bg);
+        }
+        100% {
+            transform: translateX(-10%) var(--scale_bg);
+        }
+    }
+    @keyframes animate-tree-mountains-2-4 {
+        0% {
+            transform: translateX(0%) var(--scale_bg);
+        }
+        100% {
+            transform: translateX(10%) var(--scale_bg);
+        }
+    }
+    @keyframes birds-1 {
+        0% {
+            transform: translateX(30%) translateY(-10%) var(--scale_bg);
+        }
+        100% {
+            transform: translateX(-105%) translateY(-10%) var(--scale_bg);
+        }
+    }
+    @keyframes birds-2 {
+        0% {
+            transform: translateX(20%) translateY(0) var(--scale_bg);
+        }
+        100% {
+            transform: translateX(-70%) translateY(-25%) var(--scale_bg);
+        }
+    }
+    @keyframes birds-3 {
+        0% {
+            transform: translateX(80%) translateY(0) var(--scale_bg);
+        }
+        100% {
+            transform: translateX(-50%) translateY(-20%) var(--scale_bg);
+        }
+    }
+
+    @media (max-width: 800px){
+        .body_background {
+            grid-column: 1 / 2;
+            grid-row: 1 / 5;
+            grid-area: leftblock;
+        }
+    }
+</style>
