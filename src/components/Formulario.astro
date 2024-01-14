@@ -1,3 +1,7 @@
+---
+const url_env = await import.meta.env.ACTUAL_HOST
+---
+
 <section class="section_form" onsubmit="return validateForm(event)">
     <form id="formulario" transition:name="form">
         <a href="/">
@@ -208,7 +212,7 @@
 
     async function sendBackend(dataToSend) {
     try {
-      const response = await fetch(`${import.meta.env.ACTUAL_HOST}formulario_contacto`, {
+      const response = await fetch(`${url_env}formulario_contacto`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
