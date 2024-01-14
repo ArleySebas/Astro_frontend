@@ -212,7 +212,7 @@
 
     async function sendBackend(dataToSend) {
     try {
-      const response = await fetch(`${import.meta.env.ACTUAL_HOST}formulario_contacto`, {
+      const response = await fetch('https://astro-backend-beige.vercel.app/formulario_contacto', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
